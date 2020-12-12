@@ -1,23 +1,20 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
+
 import './App.css';
 
 function App() {
+  const { transcript, resetTranscript } = useSpeechRecognition()
+
+  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+    return <div>I'm afraid your browser does not support speech recognition.</div>
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+     <button onClick={SpeechRecognition.startListening}>Start Listening</button>
+     <button onClick={SpeechRecognition.stopListening}>Stop Listening</button>
+     <button onClick={resetTranscript}>Reset</button>
+     <p>{transcript}</p>
     </div>
   );
 }
